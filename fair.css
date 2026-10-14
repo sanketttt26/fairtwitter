@@ -1,27 +1,23 @@
 /* ponytail: pure CSS, no JS. Injected before first paint, so nothing flashes.
-   Selectors are X's data-testid hooks; if X renames one, fix it here. */
+   X has no stable ids, so these lean on its markup (checked 2026-10-14).
+   If X reshuffles its HTML, fix the selector here. */
 
-/* Hide: reply / repost / like / bookmark counts (buttons stay usable) */
-article [data-testid="app-text-transition-container"],
-/* Hide: impressions (views) */
-article a[href$="/analytics"],
-/* Hide: "N Reposts / Quotes / Likes" links on an opened post */
-article a[href$="/retweets"],
-article a[href$="/quotes"],
-article a[href$="/likes"],
-/* Hide: "· 1.2M Views" after the timestamp on an opened post (no testid there) */
-article a[href*="/status/"]:has(> time) ~ *,
-article div:has(> a[href*="/status/"] > time) ~ * {
+/* Hide: reply / repost / like / bookmark counts (the number next to each icon; buttons stay usable) */
+article [data-engagement-action] svg ~ span,
+/* Hide: views in the feed */
+article [aria-label="View count"],
+/* Hide: "· 863K Views" after the date on an opened post */
+article span:has(> a[href^="/"][href*="/status/"]) ~ * {
   display: none !important;
 }
 
-/* Blur: name + @handle + badge + time (User-Name wraps all four in posts and replies) */
-article [data-testid="User-Name"],
-article [data-testid="icon-verified"],
-article [data-testid="socialContext"],
-/* Blur: profile pictures, including inside quoted posts */
-article [data-testid^="UserAvatar-Container"],
-/* Blur: timestamp on an opened post (sits outside User-Name there) */
-article time {
+/* Blur: name + badge + @handle + time. They sit in a div of span > a links;
+   :not([dir]) skips the post text, whose @mentions look the same */
+article div:not([dir]):has(> span > a[href^="/"]),
+/* Blur: name + @handle in embedded cards (not links there; they sit right after the avatar) */
+article div:has(> img[src*="profile_images"]) + div,
+article [aria-label^="Verified"],
+/* Blur: profile pictures (default avatars included) */
+article img[src*="profile_images"] {
   filter: blur(6px) !important;
 }
