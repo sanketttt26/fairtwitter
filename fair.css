@@ -1,0 +1,27 @@
+/* ponytail: pure CSS, no JS. Injected before first paint, so nothing flashes.
+   Selectors are X's data-testid hooks; if X renames one, fix it here. */
+
+/* Hide: reply / repost / like / bookmark counts (buttons stay usable) */
+article [data-testid="app-text-transition-container"],
+/* Hide: impressions (views) */
+article a[href$="/analytics"],
+/* Hide: "N Reposts / Quotes / Likes" links on an opened post */
+article a[href$="/retweets"],
+article a[href$="/quotes"],
+article a[href$="/likes"],
+/* Hide: "· 1.2M Views" after the timestamp on an opened post (no testid there) */
+article a[href*="/status/"]:has(> time) ~ *,
+article div:has(> a[href*="/status/"] > time) ~ * {
+  display: none !important;
+}
+
+/* Blur: name + @handle + badge + time (User-Name wraps all four in posts and replies) */
+article [data-testid="User-Name"],
+article [data-testid="icon-verified"],
+article [data-testid="socialContext"],
+/* Blur: profile pictures, including inside quoted posts */
+article [data-testid^="UserAvatar-Container"],
+/* Blur: timestamp on an opened post (sits outside User-Name there) */
+article time {
+  filter: blur(6px) !important;
+}
