@@ -7,7 +7,10 @@ article [data-engagement-action] svg ~ span,
 /* Hide: views in the feed */
 article [aria-label="View count"],
 /* Hide: "· 863K Views" after the date on an opened post */
-article span:has(> a[href^="/"][href*="/status/"]) ~ * {
+article span:has(> a[href^="/"][href*="/status/"]) ~ *,
+/* Older X markup (still served to some logged-in accounts): counts + views */
+article [data-testid="app-text-transition-container"],
+article div:has(> a > time) ~ * {
   display: none !important;
 }
 
@@ -18,6 +21,11 @@ article div:not([dir]):has(> span > a[href^="/"]),
 article div:has(> img[src*="profile_images"]) + div,
 article [aria-label^="Verified"],
 /* Blur: profile pictures (default avatars included) */
-article img[src*="profile_images"] {
+article img[src*="profile_images"],
+/* Older X markup: name/badge/handle/time block, time on an opened post,
+   and avatars (painted as a background-image, not the img) */
+article [data-testid="User-Name"],
+article time,
+article [style*="profile_images"] {
   filter: blur(6px) !important;
 }
