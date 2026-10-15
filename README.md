@@ -5,6 +5,7 @@ Judge posts by what they say, not who said it or how popular they are.
 On every post and reply on x.com, FairTwitter:
 
 - **Hides** like, reply, repost, quote, bookmark and view counts. The buttons still work.
+- **Hides** the "Who to follow" box, so you pick who to follow from their posts.
 - **Blurs** the name, @handle, badge, profile picture and post time.
 
 It is a single CSS file with no JavaScript and no data collection.

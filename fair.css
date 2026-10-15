@@ -8,6 +8,9 @@ article [data-engagement-action] svg ~ span,
 article [aria-label="View count"],
 /* Hide: "· 863K Views" after the date on an opened post */
 article span:has(> a[href^="/"][href*="/status/"]) ~ *,
+/* Hide: "Who to follow" sidebar box (outside any article; aria-label is English-only).
+   The border lives on the aside's grandparent, so hide that, not the aside */
+div:has(> div > aside[aria-label="Who to follow"]),
 /* Older X markup (still served to some logged-in accounts): counts + views */
 article [data-testid="app-text-transition-container"],
 article div:has(> a > time) ~ * {
